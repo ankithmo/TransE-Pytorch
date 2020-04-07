@@ -53,7 +53,6 @@ class TransE(nn.Module):
         # the size of returned tensor: positiveLoss.size()
 
     def fastValidate(self, validateHead, validateRelation, validateTail):
-
         validateHeadEmbedding = self.entity_embeddings(validateHead)
         validateRelationEmbedding = self.relation_embeddings(validateRelation)
         validateTailEmbedding = self.entity_embeddings(validateTail)
