@@ -1,4 +1,5 @@
 import re
+import os
 import time
 import pickle
 import torch
@@ -60,10 +61,7 @@ class trainTransE:
         self.testTail = None
         self.numOfTestTriple = 0
 
-        if torch.cuda.is_available():
-            self.device = torch.device("cuda:0")
-        else:
-            self.device = torch.device("cpu")
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
         self.start()
         self.train()
@@ -71,24 +69,24 @@ class trainTransE:
 
 
     def start(self):
-        print "-----Training Started at " + time.strftime('%m-%d-%Y %H:%M:%S',time.localtime(time.time())) + "-----"
-        print "input address: " + self.inAdd
-        print "output address: " +self.outAdd
-        print "entity dimension: " + str(self.entityDimension)
-        print "relation dimension: " + str(self.relationDimension)
-        print "number of epochs: " + str(self.numOfEpochs)
-        print "output training results every " + str(self.outputFreq) + " epochs"
-        print "number of batches: " + str(self.numOfBatches)
-        print "learning rate: " + str(self.learningRate)
-        print "weight decay: " + str(self.weight_decay)
-        print  "margin: " + str(self.margin)
-        print "norm: " + str(self.norm)
-        print "is a continued learning: " + str(self.preOrNot)
+        print("-----Training Started at {}-----".format(time.strftime('%m-%d-%Y %H:%M:%S',time.localtime(time.time()))))
+        print("Input address: {}".format(self.inAdd))
+        print("Output address: {}".format(self.outAdd))
+        print("Entity dimension: {}".format(self.entityDimension))
+        print("Relation dimension: {}".format(self.relationDimension))
+        print("#(epochs): {}".format(self.numOfEpochs))
+        print("output training results every {} epochs".format(self.outputFreq))
+        print("#(batches): {}".format(self.numOfBatches))
+        print("learning rate: {}".format(self.learningRate))
+        print("weight decay: {}".format(self.weight_decay))
+        print("margin: {}".format(self.margin))
+        print("norm: {}".format(self.norm))
+        print("is a continued learning: {}".format(self.preOrNot))
         if self.preOrNot:
-            print "pre-trained result address: " + self.preAdd
-        print "device: " + str(self.device)
-        print "patience: " + str(self.patience)
-        print "early stop patience: " + str(self.earlyStopPatience)
+            print("pre-trained result address: {}".format(self.preAdd))
+        print("device: {}".format(self.device))
+        print("patience: {}".format(self.patience))
+        print("early stop patience: {}".format(self.earlyStopPatience))
 
     def end(self):
         print "-----Training Finished at " + time.strftime('%m-%d-%Y %H:%M:%S',time.localtime(time.time())) + "-----"
@@ -286,8 +284,8 @@ class trainTransE:
             print "error in " + fileName
 
     def readValidateTriples(self):
-        fileName = "/valid2id.txt"
-        print "-----Reading Validation Triples from " + self.inAdd + fileName + "-----"
+        fileName = "valid2id.txt"
+        print("-----Reading Validation Triples from {}" + self.inAdd + fileName + "-----"
         count = 0
         self.validate2id["h"] = []
         self.validate2id["r"] = []

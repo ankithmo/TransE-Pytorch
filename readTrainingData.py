@@ -1,4 +1,5 @@
 import re
+import os
 import torch
 
 class readData:
@@ -19,36 +20,37 @@ class readData:
         self.trainTriple = None
 
         self.readTrain2id()
-        print "number of triples: " + str(self.numOfTriple)
+        print("number of triples: {}".format(self.numOfTriple))
 
         self.readEntity2id()
-        print "number of entities: " + str(self.numOfEntity)
+        print("number of entities: {}".format(self.numOfEntity))
 
         self.readRelation2id()
-        print "number of relations: " + str(self.numOfRelation)
+        print("number of relations: {}".format(self.numOfRelation))
 
         self.nums[0] = self.numOfTriple
         self.nums[1] = self.numOfEntity
         self.nums[2] = self.numOfRelation
 
-        # print self.numOfTriple
-        # print self.train2id
-        # print self.numOfEntity
-        # print self.entity2id
-        # print self.id2entity
-        # print self.numOfRelation
-        # print self.relation2id
-        # print self.id2relation
-        # print self.headRelation2Tail
-        # print self.tailRelation2Head
+        # Debugging
+        # print(self.numOfTriple)
+        # print(self.train2id)
+        # print(self.numOfEntity)
+        # print(self.entity2id)
+        # print(self.id2entity)
+        # print(self.numOfRelation)
+        # print(self.relation2id)
+        # print(self.id2relation)
+        # print(self.headRelation2Tail)
+        # print(self.tailRelation2Head)
 
     def out(self):
         return self.trainTriple
 
     def readTrain2id(self):
-        print "-----Reading train2id.txt from " + self.inAdd + "/-----"
+        print("-----Reading train2id.txt from {}/-----".format(self.inAdd))
         count = 0
-        inputData = open(self.inAdd + "/train2id.txt")
+        inputData = open(os.path.join(self.inAdd,"train2id.txt"))
         line = inputData.readline()
         self.numOfTriple = int(re.findall(r"\d+", line)[0])
         self.train2id["h"] = []
@@ -93,20 +95,20 @@ class readData:
                 count += 1
                 line = inputData.readline()
             else:
-                print "error in train2id.txt at Line " + str(count + 2)
+                print("error in train2id.txt at Line {}".format(count + 2))
                 line = inputData.readline()
         inputData.close()
         if count == self.numOfTriple:
             self.trainTriple.long()
             return
         else:
-            print "error in train2id.txt"
+            print("error in train2id.txt")
             return
 
     def readEntity2id(self):
-        print "-----Reading entity2id.txt from " + self.inAdd + "/-----"
+        print("-----Reading entity2id.txt from {}/-----".format(self.inAdd))
         count = 0
-        inputData = open(self.inAdd + "/entity2id.txt")
+        inputData = open(os.path.join(self.inAdd, "entity2id.txt"))
         line = inputData.readline()
         self.numOfEntity = int(re.findall(r"\d+", line)[0])
         line = inputData.readline()
@@ -120,19 +122,19 @@ class readData:
                 count += 1
                 line = inputData.readline()
             else:
-                print "error in entity2id.txt at line " + str(count + 2)
+                print("error in entity2id.txt at line {}".format(count + 2))
                 line = inputData.readline()
         inputData.close()
         if count == self.numOfEntity:
             return
         else:
-            print "error in entity2id.txt"
+            print("error in entity2id.txt")
             return
 
     def readRelation2id(self):
-        print "-----Reading relation2id.txt from " + self.inAdd + "/-----"
+        print("-----Reading relation2id.txt from {}/-----".format(self.inAdd))
         count = 0
-        inputData = open(self.inAdd + "/relation2id.txt")
+        inputData = open(os.path.join(self.inAdd, "relation2id.txt"))
         line = inputData.readline()
         self.numOfRelation = int(re.findall(r"\d+", line)[0])
         line = inputData.readline()
@@ -146,11 +148,11 @@ class readData:
                 line = inputData.readline()
                 count += 1
             else:
-                print "error in relation2id.txt at line " + str(count + 2)
+                print("error in relation2id.txt at line {}".format(count + 2))
                 line = inputData.readline()
         inputData.close()
         if count == self.numOfRelation:
             return
         else:
-            print "error in relation2id.txt"
+            print("error in relation2id.txt")
             return
